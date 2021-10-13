@@ -21,7 +21,7 @@ streamlit==1.0.0
 torch==1.9.1
 torchvision==0.10.1
 transformers==4.11.3
-twint
+git+git://github.com/twintproject/twint.git@origin/master#egg=twint
 spacy
 beautifulsoup4
 tokenizers==0.10.3
