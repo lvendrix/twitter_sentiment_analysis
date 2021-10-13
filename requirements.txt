@@ -22,7 +22,7 @@ streamlit==1.0.0
 torch==1.9.1
 torchvision==0.10.1
 transformers==4.11.3
-twint==2.1.21
+twint
 tokenizers==0.10.3
 randfacts==0.12.0
 matplotlib==3.4.3
