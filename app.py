@@ -107,7 +107,8 @@ if col2.button('Scrape and analyze!'):
     st.download_button(
         label="Download data as CSV",
         data=csv,
-        file_name=f'SenseTwitter_{hashtag_1_clean}.csv',
+        name=hashtag_1.replace("#", "").lower(),
+        file_name=f'SenseTwitter_{name}.csv',
         mime='text/csv')
 
     # Plots sentiment analysis
