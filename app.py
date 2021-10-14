@@ -27,6 +27,7 @@ option = st.radio('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
 if option == 'Yes':
     hashtag_2 = st.text_input('Hashtag #2')
     if hashtag_2:
+        hashtag_2.replace(' ', '')
         if len(hashtag_2) == 0:
             hashtag_2 = 'netflix'
         elif hashtag_2 in string.punctuation:
@@ -34,6 +35,7 @@ if option == 'Yes':
         hashtags_to_scrape = hashtags_to_scrape + ', ' + hashtag_2
     hashtag_3 = st.text_input('Hashtag #3')
     if hashtag_3:
+        hashtag_3.replace(' ','')
         if len(hashtag_3) == 0:
             hashtag_3 = 'watch'
         elif hashtag_3 in string.punctuation:
