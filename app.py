@@ -16,13 +16,22 @@ st.set_page_config(
 # Main text
 st.markdown(f"<h1 style='text-align: center;'>🐦 #Twitter Sentiment Analysis</h1>", unsafe_allow_html=True)
 
-hashtag = st.text_input('Insert a #hashtag you wish to analyse', value="squidgame")
-hashtag_clean = hashtag.replace("#", "")
-if hashtag.startswith('#'):
-    hashtag_lower = f'__{hashtag.lower()}__'
-else:
-    hashtag_lower = f'__#{hashtag.lower()}__'
-st.write(f'The current hashtag is {hashtag_lower}')
+hashtag_1 = st.text_input('Insert a #hashtag you wish to analyse', value="squidgame")
+hashtag_1_clean = hashtag_1.replace("#", "").lower()
+hashtags_to_scrap = hashtag_1_clean
+option = st.selectbox('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
+if option == 'Yes':
+    hashtag_2 = st.text_input('Insert a #hashtag you wish to analyse', value="netflix")
+    if hashtag_2:
+        hashtag_2_clean = hashtag_2.replace("#", "")
+        hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_2_clean
+    hashtag_3 = st.text_input('Insert a #hashtag you wish to analyse', value="tv")
+    if hashtag_3:
+        hashtag_3_clean = hashtag_3.replace("#", "")
+        hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_3_clean
+
+
+st.write(f'Looking for {hashtags_to_scrap}')
 
 number_tweets = st.slider('How many tweets do you want to analyze? (The more, the longer the processing time)', 0, 1000, 100)
 
@@ -57,7 +66,7 @@ if col2.button('Scrape and analyze!'):
 
         # TWINT configuration
         c = twint.Config()
-        c.Search = hashtag_clean
+        c.Search = hashtags_to_scrap
 
         st.write("")
         st.write("*Scraping the tweets ...*")
