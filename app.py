@@ -8,7 +8,7 @@ from functions import *
 
 # Configuration of streamlit
 st.set_page_config(
-    page_title="Twitter Sentiment Analysis",
+    page_title="SenseTwitter",
     page_icon="🐦",
     layout='centered',
     initial_sidebar_state="collapsed")
