@@ -16,16 +16,28 @@ st.set_page_config(
 # Main text
 st.markdown(f"<h1 style='text-align: center;'>🐦 #Twitter Sentiment Analysis</h1>", unsafe_allow_html=True)
 
-hashtag_1 = st.text_input('Insert a #hashtag you wish to analyse', value="squidgame")
+hashtag_1 = st.text_input('Insert a #hashtag you wish to analyse.', value="squidgame")
+if len(hashtag_1) == 0:
+    hashtag_1 = 'empty'
+elif hashtag_1 in string.punctuation:
+    hashtag_1 = 'squidgame'
 
 hashtags_to_scrape = hashtag_1
 option = st.radio('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
 if option == 'Yes':
     hashtag_2 = st.text_input('Hashtag #2')
     if hashtag_2:
+        if len(hashtag_2) == 0:
+            hashtag_2 = 'netflix'
+        elif hashtag_2 in string.punctuation:
+            hashtag_2 = 'netflix'
         hashtags_to_scrape = hashtags_to_scrape + ', ' + hashtag_2
     hashtag_3 = st.text_input('Hashtag #3')
     if hashtag_3:
+        if len(hashtag_3) == 0:
+            hashtag_3 = 'watch'
+        elif hashtag_3 in string.punctuation:
+            hashtag_3 = 'watch'
         hashtags_to_scrape = hashtags_to_scrape + ', ' + hashtag_3
 
 
