@@ -31,7 +31,7 @@ st.sidebar.title('Information')
 st.sidebar.write("App created by [Logan Vendrix](https://www.linkedin.com/in/loganvendrix/)")
 st.sidebar.write("Using Twint, Bert (Hugging Face), Plotly and WordCloud")
 st.sidebar.write("Happy scraping! Happy analysis!")
-st.sidebar.write("Interested in the code? Check it out on [github](https://github.com/lvendrix/twitter_sentiment_analysis)")
+st.sidebar.write("Interested in the project? Check it out on [Github](https://github.com/lvendrix/twitter_sentiment_analysis)")
 
 # Selects a language
 selected_language = st.selectbox('Which language are you interested in?', ('English', 'French', 'German', 'Dutch', 'Spanish'))
