@@ -31,7 +31,7 @@ if option == 'Yes':
         hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_3_clean
 
 
-st.write(f'Looking for {hashtags_to_scrap}')
+st.write(f'Current hashtags: __{hashtags_to_scrap}__')
 
 number_tweets = st.slider('How many tweets do you want to analyze? (The more, the longer the processing time)', 0, 1000, 100)
 
