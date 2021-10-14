@@ -101,7 +101,7 @@ if col2.button('Scrape and analyze!'):
     st.success('Done!')
 
     # Presenting the dataframe and sentiment analysis plot
-    st.markdown(f"<h2 style='text-align: center;'>Sentiment Analysis of #{hashtag_clean}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center;'>Sentiment Analysis of #{hashtags_to_scrap}</h2>", unsafe_allow_html=True)
     st.write(df)
     csv = convert_df(df)
 
@@ -109,7 +109,7 @@ if col2.button('Scrape and analyze!'):
     st.download_button(
         label="Download data as CSV",
         data=csv,
-        file_name=f'{hashtag_clean}_sentiment_analysis.csv',
+        file_name=f'SenseTwitter_{hashtag_1_clean}.csv',
         mime='text/csv')
 
     # Plots sentiment analysis
@@ -124,7 +124,7 @@ if col2.button('Scrape and analyze!'):
     st.metric(label="Average Sentiment Score", value=f"{round(score,2)}/5")
 
     # Showing wordcloud (All, Positive and Negative)
-    st.markdown(f"<h4 style='text-align: center;'>WordClouds of #{hashtag_clean}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center;'>WordClouds of #{hashtags_to_scrap}</h4>", unsafe_allow_html=True)
 
     tweet_All = " ".join(review for review in df['tweet_cleaned'])
     tweet_pos = " ".join(review for review in df[df['sentiment'] > 3].tweet_cleaned)
