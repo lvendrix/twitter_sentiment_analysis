@@ -19,13 +19,13 @@ st.markdown(f"<h1 style='text-align: center;'>🐦 #Twitter Sentiment Analysis</
 hashtag_1 = st.text_input('Insert a #hashtag you wish to analyse', value="squidgame")
 hashtag_1_clean = hashtag_1.replace("#", "").lower()
 hashtags_to_scrap = hashtag_1_clean
-option = st.selectbox('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
+option = st.radio('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
 if option == 'Yes':
-    hashtag_2 = st.text_input('Insert a #hashtag you wish to analyse', value="netflix")
+    hashtag_2 = st.text_input('Hashtag #2')
     if hashtag_2:
         hashtag_2_clean = hashtag_2.replace("#", "")
         hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_2_clean
-    hashtag_3 = st.text_input('Insert a #hashtag you wish to analyse', value="tv")
+    hashtag_3 = st.text_input('Hashtag #3')
     if hashtag_3:
         hashtag_3_clean = hashtag_3.replace("#", "")
         hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_3_clean
@@ -59,7 +59,7 @@ col1, col2, col3 = st.columns(3)
 # Button to scrape and analyze
 if col2.button('Scrape and analyze!'):
     with st.spinner('In progress...'):
-        st.write(f"*Summary:* {str(number_tweets)} tweets about {hashtag_lower} in {selected_language} are being scraped and analyzed.")
+        st.write(f"*Summary:* {str(number_tweets)} tweets about {hashtags_to_scrap} in {selected_language} are being scraped and analyzed.")
         x = randfacts.get_fact()
         st.write("")
         st.write(f"*Did you know?* {x}")
