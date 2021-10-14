@@ -17,21 +17,19 @@ st.set_page_config(
 st.markdown(f"<h1 style='text-align: center;'>🐦 #Twitter Sentiment Analysis</h1>", unsafe_allow_html=True)
 
 hashtag_1 = st.text_input('Insert a #hashtag you wish to analyse', value="squidgame")
-hashtag_1_clean = hashtag_1.replace("#", "").lower()
-hashtags_to_scrap = hashtag_1_clean
+
+hashtags_to_scrape = hashtag_1
 option = st.radio('Want to analyze more than 1 hashtag? (Max 3)', ('No', 'Yes'))
 if option == 'Yes':
     hashtag_2 = st.text_input('Hashtag #2')
     if hashtag_2:
-        hashtag_2_clean = hashtag_2.replace("#", "")
-        hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_2_clean
+        hashtags_to_scrape = hashtags_to_scrape + ', ' + hashtag_2
     hashtag_3 = st.text_input('Hashtag #3')
     if hashtag_3:
-        hashtag_3_clean = hashtag_3.replace("#", "")
-        hashtags_to_scrap = hashtags_to_scrap + ', ' + hashtag_3_clean
+        hashtags_to_scrape = hashtags_to_scrape + ', ' + hashtag_3
 
 
-st.write(f'Current hashtags: __{hashtags_to_scrap}__')
+st.write(f'Current hashtags: __{hashtags_to_scrape}__')
 
 number_tweets = st.slider('How many tweets do you want to analyze? (The more, the longer the processing time)', 0, 1000, 100)
 
@@ -59,14 +57,14 @@ col1, col2, col3 = st.columns(3)
 # Button to scrape and analyze
 if col2.button('Scrape and analyze!'):
     with st.spinner('In progress...'):
-        st.write(f"*Summary:* {str(number_tweets)} tweets about {hashtags_to_scrap} in {selected_language} are being scraped and analyzed.")
+        st.write(f"*Summary:* {str(number_tweets)} tweets about {hashtags_to_scrape} in {selected_language} are being scraped and analyzed.")
         x = randfacts.get_fact()
         st.write("")
         st.write(f"*Did you know?* {x}")
 
         # TWINT configuration
         c = twint.Config()
-        c.Search = hashtags_to_scrap
+        c.Search = hashtags_to_scrape
 
         st.write("")
         st.write("*Scraping the tweets ...*")
@@ -101,7 +99,7 @@ if col2.button('Scrape and analyze!'):
     st.success('Done!')
 
     # Presenting the dataframe and sentiment analysis plot
-    st.markdown(f"<h2 style='text-align: center;'>Sentiment Analysis of #{hashtags_to_scrap}</h2>", unsafe_allow_html=True)
+    st.markdown(f"<h2 style='text-align: center;'>Sentiment Analysis of #{hashtags_to_scrape}</h2>", unsafe_allow_html=True)
     st.write(df)
     csv = convert_df(df)
 
@@ -125,7 +123,7 @@ if col2.button('Scrape and analyze!'):
     st.metric(label="Average Sentiment Score", value=f"{round(score,2)}/5")
 
     # Showing wordcloud (All, Positive and Negative)
-    st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrap}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrape}</h4>", unsafe_allow_html=True)
 
     tweet_All = " ".join(review for review in df['tweet_cleaned'])
     tweet_pos = " ".join(review for review in df[df['sentiment'] > 3].tweet_cleaned)
