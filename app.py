@@ -117,6 +117,7 @@ if col2.button('Scrape and analyze!'):
     fig.update_layout(title_text="Sentiment Score Histogram", title_x=0.5)
     fig.update_xaxes(title_text='Sentiment score from 1 (negative) to 5 (positive)')
     fig.update_yaxes(title_text='Count')
+    fig.update_layout(bargap=.2)
     st.plotly_chart(fig)
 
     score = df.sentiment.mean()
@@ -124,7 +125,7 @@ if col2.button('Scrape and analyze!'):
     st.metric(label="Average Sentiment Score", value=f"{round(score,2)}/5")
 
     # Showing wordcloud (All, Positive and Negative)
-    st.markdown(f"<h4 style='text-align: center;'>WordClouds of #{hashtags_to_scrap}</h4>", unsafe_allow_html=True)
+    st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrap}</h4>", unsafe_allow_html=True)
 
     tweet_All = " ".join(review for review in df['tweet_cleaned'])
     tweet_pos = " ".join(review for review in df[df['sentiment'] > 3].tweet_cleaned)
