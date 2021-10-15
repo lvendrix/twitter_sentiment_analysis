@@ -17,7 +17,7 @@ model = AutoModelForSequenceClassification.from_pretrained('nlptown/bert-base-mu
 def clean_user_input(text):
     clean_user_text = ''
     for char in text:
-        if char not in string.punctuation and not emoji.is_emoji(char) and not char.isnumeric():
+        if char not in string.punctuation and not emoji.is_emoji(char) and char.isalpha():
             clean_user_text += char
     clean_user_text_no_space = clean_user_text.replace(' ', '')
     return clean_user_text_no_space
