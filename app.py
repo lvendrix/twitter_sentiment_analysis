@@ -69,9 +69,13 @@ elif selected_language == 'Spanish':
 
 col1, col2, col3 = st.columns(3)
 # Button to scrape and analyze
-if col2.button('Scrape and analyze!'):
+if col2.button('Scrape and analyze!') and number_tweets >= 1:
     with st.spinner('In progress ...'):
-        st.write(f"*Summary:* {str(number_tweets)} tweets about __{hashtags_to_scrape}__ in {selected_language} are being scraped and analyzed.")
+        if number_tweets > 1:
+            st.write(f"*Summary:* {str(number_tweets)} tweets about __{hashtags_to_scrape}__ in {selected_language} are being scraped and analyzed.")
+        elif number_tweets == 1:
+            st.write(
+                f"*Summary:* 1 tweet about __{hashtags_to_scrape}__ in {selected_language} is being scraped and analyzed.")
         # Random fact to entertain user while waiting
         x = randfacts.get_fact()
         st.write("")
@@ -92,21 +96,21 @@ if col2.button('Scrape and analyze!'):
         # Convert it into an easier-to-read dataframe variable
         twint_df = twint.storage.panda.Tweets_df
 
-        index = twint_df.index
+        # Filter tweets in the user's language (problem with TWINT even if selects only one language)
+        df_filtered_language = twint_df.loc[twint_df['language'] == language]
+
+        index = df_filtered_language.index
         number_of_rows = len(index)
 
         # If no data, we stop the process
-        if number_of_rows <= 0:
+        if number_of_rows < 1:
             st.markdown(f"<h4 style='text-align: center;'>Not enough data... Try with new hashtags</h4>",
                         unsafe_allow_html=True)
 
         # If data, we go further into the analysis
-        elif number_of_rows > 0:
-            # Filter tweets in the user's language (problem with TWINT even if selects only one language)
-            tweets_df_eng = twint_df.loc[twint_df['language'] == language]
-
+        elif number_of_rows >= 1:
             # Only keeps the 'tweet' column and the number of tweets selected by the user
-            df = tweets_df_eng[['tweet']]
+            df = df_filtered_language[['tweet']]
             df = df.iloc[0:number_tweets]
 
             st.write("*Preprocessing the tweets ...*")
@@ -141,14 +145,15 @@ if col2.button('Scrape and analyze!'):
             # Showing average sentiment score
             st.metric(label="Average Sentiment Score", value=f"{round(score,2)}/5")
 
-            # Showing wordcloud (All, Positive and Negative)
-            st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrape}</h4>", unsafe_allow_html=True)
-
             df_positive = df[df['sentiment'] > 3]
             df_negative = df[df['sentiment'] < 3]
 
             # Checks if enough positive and negative tweets for the wordcloud (minimum 1 tweet in each)
             if len(df_positive.index) > 0 and len(df_negative.index) > 0:
+                # Showing wordcloud (All, Positive and Negative)
+                st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrape}</h4>",
+                            unsafe_allow_html=True)
+
                 tweet_All = " ".join(tweet for tweet in df['tweet_cleaned'])
                 tweet_pos = " ".join(tweet for tweet in df_positive['tweet_cleaned'])
                 tweet_neg = " ".join(tweet for tweet in df_negative['tweet_cleaned'])
@@ -173,6 +178,10 @@ if col2.button('Scrape and analyze!'):
                 st.pyplot(fig)
 
             else:
+                # Showing all of them at once (because not enough in either positive or negative)
+                st.markdown(f"<h4 style='text-align: center;'>WordCloud of {hashtags_to_scrape}</h4>",
+                            unsafe_allow_html=True)
+
                 tweet_All = " ".join(tweet for tweet in df['tweet_cleaned'])
                 wordcloud_ALL = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_All)
 
@@ -190,6 +199,6 @@ if col2.button('Scrape and analyze!'):
             col2.download_button(
                 label="Download data as CSV",
                 data=csv,
-                file_name=f'SenseTwitter_Analysis.csv',
+                file_name='SenseTwitter.csv',
                 mime='text/csv')
 
