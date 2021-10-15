@@ -102,7 +102,7 @@ if col2.button('Scrape and analyze!'):
 
         # If data, we go further into the analysis
         elif number_of_rows > 0:
-            # Filter reviews in the user's language (problem with TWINT even if selects only one language)
+            # Filter tweets in the user's language (problem with TWINT even if selects only one language)
             tweets_df_eng = twint_df.loc[twint_df['language'] == language]
 
             # Only keeps the 'tweet' column and the number of tweets selected by the user
@@ -144,28 +144,45 @@ if col2.button('Scrape and analyze!'):
             # Showing wordcloud (All, Positive and Negative)
             st.markdown(f"<h4 style='text-align: center;'>WordClouds of {hashtags_to_scrape}</h4>", unsafe_allow_html=True)
 
-            tweet_All = " ".join(review for review in df['tweet_cleaned'])
-            tweet_pos = " ".join(review for review in df[df['sentiment'] > 3].tweet_cleaned)
-            tweet_neg = " ".join(review for review in df[df['sentiment'] < 3].tweet_cleaned)
+            df_positive = df[df['sentiment'] > 3]
+            df_negative = df[df['sentiment'] < 3]
 
-            fig, ax = plt.subplots(3, 1, figsize=(30, 30))
-            # Create and generate a word cloud image
-            wordcloud_ALL = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_All)
-            wordcloud_POS = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_pos)
-            wordcloud_NEG = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_neg)
+            # Checks if enough positive and negative tweets for the wordcloud (minimum 1 tweet in each)
+            if len(df_positive.index) > 0 and len(df_negative.index) > 0:
+                tweet_All = " ".join(tweet for tweet in df['tweet_cleaned'])
+                tweet_pos = " ".join(tweet for tweet in df_positive['tweet_cleaned'])
+                tweet_neg = " ".join(tweet for tweet in df_negative['tweet_cleaned'])
 
-            # Display the generated image
-            ax[0].imshow(wordcloud_ALL, interpolation='bilinear')
-            ax[0].set_title('All Tweets', fontsize=30, pad=20)
-            ax[0].axis('off')
-            ax[1].imshow(wordcloud_POS, interpolation='bilinear')
-            ax[1].set_title('Positive Tweets', fontsize=30, pad=20)
-            ax[1].axis('off')
-            ax[2].imshow(wordcloud_NEG, interpolation='bilinear')
-            ax[2].set_title('Negative Tweets', fontsize=30, pad=20)
-            ax[2].axis('off')
+                fig, ax = plt.subplots(3, 1, figsize=(30, 30))
+                # Create and generate a word cloud image
+                wordcloud_ALL = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_All)
+                wordcloud_POS = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_pos)
+                wordcloud_NEG = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_neg)
 
-            st.pyplot(fig)
+                # Display the generated image
+                ax[0].imshow(wordcloud_ALL, interpolation='bilinear')
+                ax[0].set_title('All Tweets', fontsize=30, pad=20)
+                ax[0].axis('off')
+                ax[1].imshow(wordcloud_POS, interpolation='bilinear')
+                ax[1].set_title('Positive Tweets', fontsize=30, pad=20)
+                ax[1].axis('off')
+                ax[2].imshow(wordcloud_NEG, interpolation='bilinear')
+                ax[2].set_title('Negative Tweets', fontsize=30, pad=20)
+                ax[2].axis('off')
+
+                st.pyplot(fig)
+
+            else:
+                tweet_All = " ".join(tweet for tweet in df['tweet_cleaned'])
+                wordcloud_ALL = WordCloud(max_font_size=50, max_words=100, background_color="white").generate(tweet_All)
+
+                # Create and generate a word cloud image
+                fig, ax = plt.subplots(figsize=(30, 30))
+                ax.imshow(wordcloud_ALL, interpolation='bilinear')
+                ax.set_title('All Tweets', fontsize=30, pad=20)
+                ax.axis('off')
+
+                st.pyplot(fig)
 
             st.write('')
             col1, col2, col3 = st.columns(3)
