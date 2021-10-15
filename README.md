@@ -1,4 +1,4 @@
-# SenseTwitter (Twitter Sentiment Analysis App)
+# SenseTwitter
 [SenseTwitter](https://share.streamlit.io/lvendrix/twitter_sentiment_analysis/main/app.py) is a Twitter sentiment analysis application built in Python. It scrapes tweets based on the user's input: hashtags to look for (up to two), the number of tweets desired, and the selected language.  After preprocessing the tweets, they are being analyzed using a pre-trained NLP model [Bert Base Multilingual Uncased Model](https://huggingface.co/nlptown/bert-base-multilingual-uncased-sentiment) and are given a sentiment score from 1 (Negative) to 5 (Positive) for each tweet. In the end, a general sentiment score as well as a histogram and wordclouds are given. Users are also given the option to download the data (original and processed tweets, and sentiment score) as a csv for further analysis.
 Official link: [SenseTwitter](https://share.streamlit.io/lvendrix/twitter_sentiment_analysis/main/app.py)
 
