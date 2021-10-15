@@ -70,7 +70,7 @@ elif selected_language == 'Spanish':
 col1, col2, col3 = st.columns(3)
 # Button to scrape and analyze
 if col2.button('Scrape and analyze!'):
-    with st.spinner('In progress...'):
+    with st.spinner('In progress ...'):
         st.write(f"*Summary:* {str(number_tweets)} tweets about __{hashtags_to_scrape}__ in {selected_language} are being scraped and analyzed.")
         # Random fact to entertain user while waiting
         x = randfacts.get_fact()
@@ -175,5 +175,4 @@ if col2.button('Scrape and analyze!'):
                 data=csv,
                 file_name=f'SenseTwitter_Analysis.csv',
                 mime='text/csv')
-
 
