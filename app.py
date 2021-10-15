@@ -124,7 +124,7 @@ if col2.button('Scrape and analyze!'):
             st.success('Done!')
 
             # Presenting the dataframe and sentiment analysis plot
-            st.markdown(f"<h3 style='text-align: center;'>Sentiment Analysis of *{hashtags_to_scrape}*</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='text-align: center;'>Sentiment Analysis of #{hashtags_to_scrape}</h3>", unsafe_allow_html=True)
             st.write(df)
             csv = convert_df(df)
 
