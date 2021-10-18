@@ -22,7 +22,7 @@ st.sidebar.write("Interested in the project?"
                  "\nCheck it out on [Github](https://github.com/lvendrix/twitter_sentiment_analysis)")
 
 # Title
-st.markdown(f"<h1 style='text-align: center;'>🐦 #Twitter Sentiment Analysis</h1>", unsafe_allow_html=True)
+st.markdown(f"<h1 style='text-align: center;'>🐦 #SenseTwitter</h1>", unsafe_allow_html=True)
 
 # Getting user's hashtags
 hashtags_to_scrape = ''
